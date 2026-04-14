@@ -7,71 +7,76 @@ public class BrowsingHistory {
         this.actual = null;
     }
 
-    public void visitar(String url) {
+    // Visita una nueva página: elimina el historial futuro y agrega al final
+    public void visitarPagina(String url) {
         DoubleKnot nuevo = new DoubleKnot(url);
-        if (actual != null) {
-            actual.siguiente = nuevo;   // elimina páginas futuras
+
+        if (actual == null) {
+            actual = nuevo;
+        } else {
+            // Eliminar páginas futuras
+            actual.siguiente = null;
+
+            // Enlazar nuevo nodo después del actual
             nuevo.anterior = actual;
+            actual.siguiente = nuevo;
+            actual = nuevo;
         }
-        actual = nuevo;
         System.out.println("Visitando: " + url);
     }
 
-  public void retroceder() {
+    // Retrocede a la página anterior
+    public void retroceder() {
         if (actual == null || actual.anterior == null) {
             System.out.println("No hay página anterior.");
-            return;
+        } else {
+            actual = actual.anterior;
+            System.out.println("Retrocediendo a: " + actual.dato);
         }
-        actual = actual.anterior;
-        System.out.println("Retrocediendo a: " + actual.url);
     }
 
+    // Avanza a la siguiente página
     public void avanzar() {
         if (actual == null || actual.siguiente == null) {
             System.out.println("No hay página siguiente.");
-            return;
+        } else {
+            actual = actual.siguiente;
+            System.out.println("Avanzando a: " + actual.dato);
         }
-        actual = actual.siguiente;
-        System.out.println("Avanzando a: " + actual.url);
     }
 
-    public void eliminar() {
+    // Muestra la página actual
+    public void paginaActual() {
         if (actual == null) {
-            System.out.println("Historial vacío.");
-            return;
+            System.out.println("El navegador está vacío.");
+        } else {
+            System.out.println("Página actual: " + actual.dato);
         }
-        System.out.println("Eliminando: " + actual.url);
-        if (actual.anterior != null) actual.anterior.siguiente = actual.siguiente;
-        if (actual.siguiente != null) actual.siguiente.anterior = actual.anterior;
-        actual = (actual.anterior != null) ? actual.anterior : actual.siguiente;
     }
 
-    public boolean buscar(String url) {
-        DoubleKnot temp = actual;
-        while (temp != null && temp.anterior != null) temp = temp.anterior; // ir al inicio
-        while (temp != null) {
-            if (temp.url.equals(url)) {
-                System.out.println("URL encontrada en el historial: " + url);
-                return true;
-            }
-            temp = temp.siguiente;
-        }
-        System.out.println("URL no encontrada: " + url);
-        return false;
-    }
-    public void mostrar() {
+    // Muestra todo el historial
+    public void mostrarHistorial() {
         if (actual == null) {
-            System.out.println("Historial vacío.");
+            System.out.println("No hay historial.");
             return;
         }
-        DoubleKnot temp = actual;
-        while (temp.anterior != null) temp = temp.anterior;
+
+        DoubleKnot inicio = actual;
+        while (inicio.anterior != null) {
+            inicio = inicio.anterior;
+        }
 
         System.out.println("=== Historial de navegación ===");
+        DoubleKnot temp = inicio;
+        int i = 1;
         while (temp != null) {
-            String marca = (temp == actual) ? "  <-- actual" : "";
-            System.out.println("  " + temp.url + marca);
+            if (temp == actual) {
+                System.out.println("  [" + i + "] >>> " + temp.dato + " <<< (actual)");
+            } else {
+                System.out.println("  [" + i + "]     " + temp.dato);
+            }
             temp = temp.siguiente;
+            i++;
         }
     }
 }

@@ -2,16 +2,34 @@ package Escenario2HistorialWeb;
 
 public class MainBrowsing {
     public static void main(String[] args) {
-        BrowsingHistory nav = new BrowsingHistory();
-        nav.visitar("google.com");
-        nav.visitar("github.com");
-        nav.visitar("stackoverflow.com");
-        nav.mostrar();
-        nav.retroceder();
-        nav.retroceder();
-        nav.avanzar();
-        nav.visitar("openai.com");
-        nav.mostrar();
-        nav.buscar("github.com");
+
+        Navegador navegador = new Navegador("MiNavegador");
+
+        System.out.println();
+        navegador.visitarPagina("google.com");
+        navegador.visitarPagina("wikipedia.org");
+        navegador.visitarPagina("github.com");
+
+        System.out.println();
+        navegador.mostrarHistorial();
+
+        System.out.println();
+        navegador.retroceder();
+        navegador.retroceder();
+
+        System.out.println();
+        navegador.mostrarPaginaActual();
+
+        System.out.println();
+        navegador.avanzar();
+
+        System.out.println();
+        navegador.visitarPagina("stackoverflow.com");
+
+        System.out.println();
+        navegador.mostrarHistorial();
+
+        System.out.println();
+        navegador.avanzar();
     }
 }

@@ -3,14 +3,26 @@ package Escenario1Panaderia;
 public class MainPanaderia {
     public static void main(String[] args) {
 
-        SimpleList panaderia = new SimpleList();
-        panaderia.agregar("Carlos");
-        panaderia.agregar("María");
-        panaderia.agregar("Luis");
-        panaderia.mostrar();
-        panaderia.siguienteTurno();
-        panaderia.atender();
-        panaderia.buscar("Luis");
-        panaderia.mostrar();
+        Panaderia panaderia = new Panaderia("La Esquina Dorada");
+
+        System.out.println();
+        panaderia.registrarCliente("Carlos");
+        panaderia.registrarCliente("María");
+        panaderia.registrarCliente("Luis");
+
+        System.out.println();
+        panaderia.mostrarTurnos();
+
+        System.out.println();
+        panaderia.consultarSiguiente();
+
+        System.out.println();
+        panaderia.atenderSiguiente();
+
+        System.out.println();
+        panaderia.buscarCliente("Luis");
+
+        System.out.println();
+        panaderia.mostrarTurnos();
     }
 }
